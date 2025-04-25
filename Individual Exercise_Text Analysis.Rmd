@@ -1,0 +1,240 @@
+### ITEC6810A Individual Exercise
+#### By *** [Insert your name here] 
+#### Studnet Number: *** [Insert your student number here] 
+
+```{css style settings, echo = FALSE}
+blockquote {
+    padding: 10px 20px;
+    margin: 0 0 20px;
+    font-size: 14px;
+    border-left: 5px solid #eee;
+}
+```
+
+<br>
+
+Now it's your turn to conduct text analysis with social media text! 
+For details about how to use R markdown, you may refer to the following resources
+
+- [R Markdown: The Definitive Guide](https://bookdown.org/yihui/rmarkdown/)
+- [R Markdown Basics](https://stats.oarc.ucla.edu/stat/data/rmarkdown/rmarkdown_seminar_flat.html)
+
+In this exercise, you will use text analysis techniques to explore a dataset containing tweets from members of the 116th United States Congress that met from January 3, 2019 to January 2, 2021. The dataset has also been cleaned to contain information about each legislator. Concretely, you will do the following:
+
+- Preprocess the text of legislators' tweets
+- Conduct exploratory data analysis of the text
+- Use sentiment analysis to explore differences between legislators' tweets
+- Featurize text with manual feature engineering, frequency-based, and vector-based techniques
+- Predict legislators' political parties and whether they are a Senator or Representative
+
+You will explore two questions that relate to two central findings in political science and examine how they relate to the text of legislators' tweets. First, political scientists have argued that U.S. politics is currently highly polarized relative to other periods in American history, but also that the polarization is asymmetric. Historically, there were several conservative Democrats (i.e., “blue dog Democrats”) and liberal Republicans (i.e., “Rockefeller Republicans”), as measured by popular measurement tools like DW-NOMINATE. However, in the last few years, there are few if any examples of any Democrat in Congress being further to the right than any Republican and vice versa. At the same time, scholars have argued that this polarization is mostly a function of the Republican party moving further right than the Democratic party has moved left. Does this sort of asymmetric polarization show up in how politicians communicate to their constituents through tweets?
+Second, the U.S. Congress is a bicameral legislature, and there has long been debate about partisanship in the Senate versus the House. The House of Representatives is apportioned by population and all members serve two-year terms. In the Senate, each state receives two Senators and each Senator serves a term of six years. For a variety of reasons (smaller chamber size, more insulation from the voters, rules and norms like the filibuster, etc.), the Senate has been argued to be the “cooling saucer” of Congress in that it is more bipartisan and moderate than the House. **Does the theory that the Senate is more moderate have support in Senators' tweets?**
+
+**Note**: See the project handout for more details on caveats and the data dictionary.
+
+<br>
+
+##### Install packages needed
+
+```{r}
+# install.packages("markdown")
+
+
+```
+
+<br>
+
+##### Load packaged needed
+
+```{r}
+# Include the packages needed here
+library(markdown)
+
+
+```
+
+<br>
+
+##### Read data from csv in the "data" folder
+
+```{r}
+congress_tweets = read.csv("data/congress_tweets_cleaned.csv")
+nrow(congress_tweets) # 10,000 tweets in the dataset
+# Fill in this line of code with a sufficient number (sample size) of tweets, depending on your computational resources
+# congress_tweets = sample_n(congress_tweets, *)
+head(congress_tweets)
+```
+
+<br>
+
+####  Text Preprocessing
+
+The first step in working with text data is to preprocess it. Vijayarani et al. (2015) provides an overview of preprocessing techniques for text mining, which you can refer to. Make sure you do the following:
+
+-	Remove punctuation and stop words.
+-	Remove tokens that occur frequently in tweets but may not be helpful for downstream classification. For instance, many tweets contain a ag for retweeting, or share a URL
+
+As you search online, you might run into solutions that rely on regular expressions. You are free to use these, and encouraged to use relevant R packlages (e.g., tidytext, SnowballC, tm) to do some of this text preprocessing.
+
+> *Vijayarani, S., Ilamathi, M.J. and Nithya, M. (2015), ‘Preprocessing Techniques for Text Mining – An Overview’, International Journal of Computer Science & Communication Networks, 5 (1), 7–16.*
+
+
+```{r}
+# Remove punctuation and stop words.
+
+
+# Remove tokens that occur frequently in tweets but may not be helpful for downstream classification
+
+
+
+```
+
+<br>
+
+#### Exploratory Data Analysis (EDA)
+
+Use two of the techniques we covered in lecture (or other techniques outside of lecture) to explore the text of the tweets. You should construct these visualizations with an eye toward the eventual classification tasks.
+
+- Explore the textual features of tweets as a whole or by legislator's political party and position
+  As a reminder, in lecture we covered word frequencies and topic modeling as possible exploration tools.
+- Visualize features using plotting methods (e.g., word clouds, ggplot)
+- Predict whether the legislator legislator's political party (democrat vs. republican) and position (Senator or Representative) using statistical inference (e.g., logistic regression)
+
+##### EDA1
+
+```{r}
+# Explore the textual features of tweet
+
+
+# By party
+
+
+# By Position
+
+```
+##### EDA2
+
+```{r}
+# Visualization
+
+```
+
+##### EDA2
+
+```{r}
+# Prediction using regression models
+
+
+```
+
+<br>
+
+#### Sentiment Analysis
+
+Next, let's analyze the sentiments contained within the tweets. You may use different packages for these tasks. Do the following:
+
+- Choose two legislators, one who you think will be more liberal and one who you think will be more conservative, and analyze their sentiment and/or subjectivity scores per tweet. For instance, you might do two scatterplots that plot each legislator's sentiment against their subjectivity, or two density plots for their sentiments. Do the scores match what you thought?
+- Plot two more visualizations like the ones you chose in the first part, but do them to compare (1) Democrats vs. Republicans and (2) Senators vs. Representatives
+
+```{r}
+# Analyze the sentiments contained within the tweets
+
+```
+
+<br>
+
+#### Featurization
+
+Before going to classification, explore different featurization techniques. Create three dataframes or arrays to represent your text features, specifically:
+
+-	Features engineered from your previous analysis. For example, word counts, sentiment scores, topic model etc.
+-	A term frequency-inverse document frequency matrix.
+-	An embedding-based featurization (like a document averaged word2vec)
+
+In the next section, you will experiment with each of these featurization techniques to see which one produces the best classifications.
+
+##### Engineered Text Features
+
+```{r}
+# Features engineered from  previous analysis
+
+```
+
+
+##### Bag-of-words or Tf-idf
+
+```{r}
+# N-gram
+
+
+
+# Tf-idf
+
+
+```
+
+
+##### Word Embedding
+
+```{r}
+# Train word2vec
+
+
+```
+
+<br>
+
+#### Classification
+
+Either use cross-validation or partition your data with training/validation/test sets for this section. Do the following:
+
+-	Choose a supervised learning algorithm such as logistic regression, random forest etc.
+-	Train six models. For each of the three data frames you created in the featurization part, train one model to predict whether the author of the tweet is a Democrat or Republican, and a second model to predict whether the author is a Senator or Representative.
+-	Report the accuracy and other relevant metrics for each of these six models.
+-	Choose the featurization technique associated with your best model. Combine those text features with non-text features. Train two more models: (1) A supervised learning algorithm that uses just the non-text features and (2) a supervised learning algorithm that combines text and non-text features. Report accuracy and other relevant metrics.
+
+If time permits, you are encouraged to use hyperparameter tuning or AutoML techniques like TPOT, but are not explicitly required to do so.
+
+##### Train Six Models with Just Text
+
+```{r}
+# Six models: [engineered features, frequency-based, embedding] * [democrat/republican, senator/representative]
+
+
+
+```
+
+##### Two Combined Models
+
+```{r}
+# Two models: [best text features + non-text features] * [democrat/republican, senator/representative]
+
+
+```
+
+<br>
+
+#### Discussion Questions
+
+
+1.	Why do standard preprocessing techniques need to be further customized to a particular corpus?
+
+**Your Answer Here**
+
+<br>
+
+2.	Did you find evidence for the idea that Democrats and Republicans have different sentiments in their tweets? What about Senators and Representatives?
+
+**Your Answer Here**
+
+<br>
+
+3.	Why is validating your exploratory and unsupervised learning approaches with a supervised learning algorithm valuable?
+
+**Your Answer Here**
+
+<br>
+
+4.	Did text only, non-text only, or text and non-text features together perform the best? What is the intuition behind combining text and non-text features in a supervised learning algorithm?
+
+**Your Answer Here**
